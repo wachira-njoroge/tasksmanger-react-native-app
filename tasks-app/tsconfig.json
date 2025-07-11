@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "esnext",
+    "jsx": "react-native",
+    "strict": true,
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "customConditions": ["react-native"],
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./"
+  },
+  "extends": "expo/tsconfig.base"
+}
