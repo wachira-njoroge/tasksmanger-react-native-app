@@ -1,3 +1,4 @@
+import Constants from 'expo-constants';
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -13,6 +14,8 @@ import {
 import { FAB, TextInput, Button } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import axios from "axios";
+
+const { BACKEND_URL } = Constants.expoConfig?.extra || {};
 
 type Category = {
   id: number;
@@ -65,7 +68,7 @@ export default function TaskScreen({
     const fetchCategories = async () => {
       try {
         const res = await axios.get(
-          `${process.env.BACKEND_URL}/categories/list`,
+          `${BACKEND_URL}/categories/list`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -83,7 +86,7 @@ export default function TaskScreen({
   const fetchTasks = async () => {
     try {
       const tasksRes = await axios.get(
-        `${process.env.BACKEND_URL}/tasks/list`,
+        `${BACKEND_URL}/tasks/list`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -157,7 +160,7 @@ export default function TaskScreen({
           onPress: async () => {
             try {
               const taskSaveResponse = await axios.patch(
-                `${process.env.BACKEND_URL}/tasks/update/cancel/${task.code}`,
+                `${BACKEND_URL}/tasks/update/cancel/${task.code}`,
                 { actionType: "cancel" },
                 {
                   headers: {
@@ -193,7 +196,7 @@ export default function TaskScreen({
         startDate: new Date(),
       };
       const taskSaveResponse = await axios.patch(
-        `${process.env.BACKEND_URL}/tasks/update/start/${task.code}`,
+        `${BACKEND_URL}/tasks/update/start/${task.code}`,
         payload,
         {
           headers: {
@@ -215,7 +218,7 @@ export default function TaskScreen({
         endDate: new Date(),
       };
       const taskSaveResponse = await axios.patch(
-        `${process.env.BACKEND_URL}/tasks/update/complete/${task.code}`,
+        `${BACKEND_URL}/tasks/update/complete/${task.code}`,
         payload,
         {
           headers: {
@@ -260,7 +263,7 @@ export default function TaskScreen({
           description,
         };
         const taskSaveResponse = await axios.patch(
-          `${process.env.BACKEND_URL}/tasks/update/details/${taskCode}`,
+          `${BACKEND_URL}/tasks/update/details/${taskCode}`,
           payload,
           {
             headers: {
@@ -284,7 +287,7 @@ export default function TaskScreen({
           description,
         };
         const taskSaveResponse = await axios.post(
-          `${process.env.BACKEND_URL}/tasks/create`,
+          `${BACKEND_URL}/tasks/create`,
           payload,
           {
             headers: {

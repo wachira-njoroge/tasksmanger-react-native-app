@@ -29,7 +29,8 @@
     "extra": {
       "eas": {
         "projectId": "5be651bb-2908-4cfa-a095-deae20b7a4ea"
-      }
+      },
+      "BACKEND_URL":"https://jollitycreameries.com/api"
     },
     "owner": "solowach"
   }

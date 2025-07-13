@@ -1,3 +1,4 @@
+import Constants from 'expo-constants';
 import React, { useState } from "react";
 import {
   View,
@@ -12,6 +13,9 @@ import axios from "axios";
 type Props = {
   onLogin: (token: string) => void;
 };
+//
+const { BACKEND_URL } = Constants.expoConfig?.extra || {};
+
 
 export default function AuthScreen({ onLogin }: Props) {
   const [mode, setMode] = useState<"login" | "register">("login");
@@ -23,8 +27,8 @@ export default function AuthScreen({ onLogin }: Props) {
     try {
       const url =
         mode === "login"
-          ? `${process.env.BACKEND_URL}/users/login`
-          : `${process.env.BACKEND_URL}/users/signUp`;
+          ? `${BACKEND_URL}/users/login`
+          : `${BACKEND_URL}/users/signUp`;
         
       const validPassword = () => {
         if (mode === "login") return password;
