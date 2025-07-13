@@ -7,6 +7,6 @@ export default function App() {
   const [token, setToken] = useState<string | null>(null);
 
   return token
-    ? <TaskScreen token={token} />
+    ? <TaskScreen token={token} onLogout={() => setToken(null)} />
     : <AuthScreen onLogin={setToken} />;
 }
