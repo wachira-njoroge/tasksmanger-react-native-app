@@ -35,7 +35,13 @@ type Task = {
   };
 };
 
-export default function TaskScreen({ token, onLogout}: { token: string; onLogout: () => void;}) {
+export default function TaskScreen({
+  token,
+  onLogout,
+}: {
+  token: string;
+  onLogout: () => void;
+}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -49,7 +55,10 @@ export default function TaskScreen({ token, onLogout}: { token: string; onLogout
   // Add state for selected tab
   const [selectedTab, setSelectedTab] = useState<string>("All");
   // Toast state
-  const [toast, setToast] = useState<{message: string, type: 'success' | 'error'} | null>(null);
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
   const fadeAnim = useState(new Animated.Value(0))[0];
 
   useEffect(() => {
@@ -91,21 +100,20 @@ export default function TaskScreen({ token, onLogout}: { token: string; onLogout
   }, []);
 
   // Toast functions
-    const showToast = (error: any, type: 'success' | 'error') => {
-    
+  const showToast = (error: any, type: "success" | "error") => {
     let message = "";
     if (Array.isArray(error)) {
       message = error.map((item: any) => item.message).join("\n");
-    } else if (typeof error === 'string') {
+    } else if (typeof error === "string") {
       message = error;
-    } 
+    }
     setToast({ message, type });
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 300,
       useNativeDriver: true,
     }).start();
-    
+
     setTimeout(() => {
       Animated.timing(fadeAnim, {
         toValue: 0,
@@ -161,10 +169,17 @@ export default function TaskScreen({ token, onLogout}: { token: string; onLogout
                 fetchTasks();
                 clearDisplayInputs();
                 setModalVisible(false);
-                showToast(taskSaveResponse.data.message || "Task deleted successfully!", "success");
+                showToast(
+                  taskSaveResponse.data.message || "Task deleted successfully!",
+                  "success"
+                );
               }
             } catch (error: any) {
-              showToast(error?.response?.data?.message || "Failed to delete task. Please try again.", "error");
+              showToast(
+                error?.response?.data?.message ||
+                  "Failed to delete task. Please try again.",
+                "error"
+              );
             }
           },
         },
@@ -190,7 +205,10 @@ export default function TaskScreen({ token, onLogout}: { token: string; onLogout
         fetchTasks();
         clearDisplayInputs();
         setModalVisible(false);
-        showToast(taskSaveResponse.data.message || "Task started successfully!", "success");
+        showToast(
+          taskSaveResponse.data.message || "Task started successfully!",
+          "success"
+        );
       }
     } else {
       const payload = {
@@ -209,14 +227,17 @@ export default function TaskScreen({ token, onLogout}: { token: string; onLogout
         fetchTasks();
         clearDisplayInputs();
         setModalVisible(false);
-        showToast(taskSaveResponse.data.message || "Task completed successfully!", "success");
+        showToast(
+          taskSaveResponse.data.message || "Task completed successfully!",
+          "success"
+        );
       }
     }
   };
   //handle logout
   const handleLogout = async () => {
     onLogout();
-  }
+  };
   //
   const displayModal = async () => {
     setAction("New");
@@ -251,7 +272,10 @@ export default function TaskScreen({ token, onLogout}: { token: string; onLogout
           fetchTasks();
           clearDisplayInputs();
           setModalVisible(false);
-          showToast(taskSaveResponse.data.message || "Task updated successfully!", "success");
+          showToast(
+            taskSaveResponse.data.message || "Task updated successfully!",
+            "success"
+          );
         }
       } else {
         const payload = {
@@ -272,11 +296,18 @@ export default function TaskScreen({ token, onLogout}: { token: string; onLogout
           fetchTasks();
           clearDisplayInputs();
           setModalVisible(false);
-          showToast(taskSaveResponse.data.message || "Task created successfully!", "success");
+          showToast(
+            taskSaveResponse.data.message || "Task created successfully!",
+            "success"
+          );
         }
       }
     } catch (error: any) {
-      showToast(error?.response?.data?.message || "Failed to save task. Please try again.", "error");
+      showToast(
+        error?.response?.data?.message ||
+          "Failed to save task. Please try again.",
+        "error"
+      );
     }
   };
 
@@ -290,17 +321,17 @@ export default function TaskScreen({ token, onLogout}: { token: string; onLogout
     <View style={styles.container}>
       {/* Toast Notification for non-modal actions */}
       {toast && !modalVisible && (
-        <Animated.View 
+        <Animated.View
           style={[
             styles.toast,
-            styles[`toast${toast.type === 'success' ? 'Success' : 'Error'}`],
-            { opacity: fadeAnim }
+            styles[`toast${toast.type === "success" ? "Success" : "Error"}`],
+            { opacity: fadeAnim },
           ]}
         >
           <Text style={styles.toastText}>{toast.message}</Text>
         </Animated.View>
       )}
-      
+
       {/* Header Bar */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>My Tasks</Text>
@@ -308,7 +339,7 @@ export default function TaskScreen({ token, onLogout}: { token: string; onLogout
           <Text style={styles.logoutText}>Logout</Text>
         </Pressable>
       </View>
-      
+
       {/* Category Tabs */}
       <View style={styles.tabBar}>
         <Pressable
@@ -351,17 +382,19 @@ export default function TaskScreen({ token, onLogout}: { token: string; onLogout
         <View style={styles.modalOverlay}>
           {/* Toast Notification for modal actions */}
           {toast && modalVisible && (
-            <Animated.View 
+            <Animated.View
               style={[
                 styles.toast,
-                styles[`toast${toast.type === 'success' ? 'Success' : 'Error'}`],
-                { opacity: fadeAnim }
+                styles[
+                  `toast${toast.type === "success" ? "Success" : "Error"}`
+                ],
+                { opacity: fadeAnim },
               ]}
             >
               <Text style={styles.toastText}>{toast.message}</Text>
             </Animated.View>
           )}
-                    <View style={styles.modalView}>
+          <View style={styles.modalView}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <Text style={styles.modalTitle}>
                 {action == "Edit" ? "Edit Task" : "Create New Task"}
@@ -375,22 +408,29 @@ export default function TaskScreen({ token, onLogout}: { token: string; onLogout
                     key={index}
                     style={[
                       styles.radioButton,
-                      selectedCategory === cat.name && styles.radioButtonSelected
+                      selectedCategory === cat.name &&
+                        styles.radioButtonSelected,
                     ]}
                     onPress={() => setSelectedCategory(cat.name)}
                   >
-                    <View style={[
-                      styles.radioCircle,
-                      selectedCategory === cat.name && styles.radioCircleSelected
-                    ]}>
+                    <View
+                      style={[
+                        styles.radioCircle,
+                        selectedCategory === cat.name &&
+                          styles.radioCircleSelected,
+                      ]}
+                    >
                       {selectedCategory === cat.name && (
                         <View style={styles.radioInner} />
                       )}
                     </View>
-                    <Text style={[
-                      styles.radioText,
-                      selectedCategory === cat.name && styles.radioTextSelected
-                    ]}>
+                    <Text
+                      style={[
+                        styles.radioText,
+                        selectedCategory === cat.name &&
+                          styles.radioTextSelected,
+                      ]}
+                    >
                       {cat.name}
                     </Text>
                   </Pressable>
@@ -436,10 +476,7 @@ export default function TaskScreen({ token, onLogout}: { token: string; onLogout
               >
                 <Text style={styles.cancelButtonText}>Cancel</Text>
               </Pressable>
-              <Pressable
-                style={styles.saveButton}
-                onPress={handleSubmit}
-              >
+              <Pressable style={styles.saveButton} onPress={handleSubmit}>
                 <Text style={styles.saveButtonText}>
                   {action == "Edit" ? "Update Task" : "Create Task"}
                 </Text>
@@ -490,15 +527,17 @@ export default function TaskScreen({ token, onLogout}: { token: string; onLogout
                   onPress={() => handleToggleStatus(task)}
                   style={[
                     styles.modernButton,
-                    task.status === "in_progress" 
-                      ? styles.completeButton 
-                      : styles.startButton
+                    task.status === "in_progress"
+                      ? styles.completeButton
+                      : styles.startButton,
                   ]}
                 >
-                  <Text style={[
-                    styles.buttonText,
-                    task.status === "in_progress" && styles.buttonTextLight
-                  ]}>
+                  <Text
+                    style={[
+                      styles.buttonText,
+                      task.status === "in_progress" && styles.buttonTextLight,
+                    ]}
+                  >
                     {task.status === "in_progress" ? "Complete" : "Start"}
                   </Text>
                 </Pressable>
@@ -778,7 +817,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#007bff",
   },
   deleteButton: {
-    backgroundColor: "#f16345"
+    backgroundColor: "#f16345",
   },
   buttonText: {
     fontSize: 13,
@@ -794,7 +833,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 16,
-    paddingTop: Platform.OS === 'ios' ? 70 : 50,
+    paddingTop: Platform.OS === "ios" ? 70 : 50,
     backgroundColor: "#ffffff",
     borderBottomWidth: 1,
     borderBottomColor: "#f0f0f0",
@@ -941,7 +980,7 @@ const styles = StyleSheet.create({
   // Toast styles
   toast: {
     position: "absolute",
-    top: Platform.OS === 'ios' ? 100 : 80,
+    top: Platform.OS === "ios" ? 100 : 80,
     left: 20,
     right: 20,
     paddingHorizontal: 20,
