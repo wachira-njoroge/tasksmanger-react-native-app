@@ -65,7 +65,7 @@ export default function TaskScreen({
     const fetchCategories = async () => {
       try {
         const res = await axios.get(
-          "https://jollitycreameries.com/api/categories/list",
+          `${process.env.BACKEND_URL}/categories/list`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -83,7 +83,7 @@ export default function TaskScreen({
   const fetchTasks = async () => {
     try {
       const tasksRes = await axios.get(
-        "https://jollitycreameries.com/api/tasks/list",
+        `${process.env.BACKEND_URL}/tasks/list`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -157,7 +157,7 @@ export default function TaskScreen({
           onPress: async () => {
             try {
               const taskSaveResponse = await axios.patch(
-                `https://jollitycreameries.com/api/tasks/update/cancel/${task.code}`,
+                `${process.env.BACKEND_URL}/tasks/update/cancel/${task.code}`,
                 { actionType: "cancel" },
                 {
                   headers: {
@@ -193,7 +193,7 @@ export default function TaskScreen({
         startDate: new Date(),
       };
       const taskSaveResponse = await axios.patch(
-        `https://jollitycreameries.com/api/tasks/update/start/${task.code}`,
+        `${process.env.BACKEND_URL}/tasks/update/start/${task.code}`,
         payload,
         {
           headers: {
@@ -215,7 +215,7 @@ export default function TaskScreen({
         endDate: new Date(),
       };
       const taskSaveResponse = await axios.patch(
-        `https://jollitycreameries.com/api/tasks/update/complete/${task.code}`,
+        `${process.env.BACKEND_URL}/tasks/update/complete/${task.code}`,
         payload,
         {
           headers: {
@@ -260,7 +260,7 @@ export default function TaskScreen({
           description,
         };
         const taskSaveResponse = await axios.patch(
-          `https://jollitycreameries.com/api/tasks/update/details/${taskCode}`,
+          `${process.env.BACKEND_URL}/tasks/update/details/${taskCode}`,
           payload,
           {
             headers: {
@@ -284,7 +284,7 @@ export default function TaskScreen({
           description,
         };
         const taskSaveResponse = await axios.post(
-          "https://jollitycreameries.com/api/tasks/create",
+          `${process.env.BACKEND_URL}/tasks/create`,
           payload,
           {
             headers: {

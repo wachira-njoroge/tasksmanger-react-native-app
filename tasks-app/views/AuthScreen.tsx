@@ -23,8 +23,8 @@ export default function AuthScreen({ onLogin }: Props) {
     try {
       const url =
         mode === "login"
-          ? "https://jollitycreameries.com/api/users/login"
-          : "https://jollitycreameries.com/api/users/signUp";
+          ? `${process.env.BACKEND_URL}/users/login`
+          : `${process.env.BACKEND_URL}/users/signUp`;
         
       const validPassword = () => {
         if (mode === "login") return password;
